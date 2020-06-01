@@ -9,7 +9,7 @@
 import request from '@/utils/request'
 import qs from 'qs'
 // const url = '/api'
-const url = 'http://www.supwk.com'
+const url = 'http://supwk.nat300.top'
 
 /**
  * 获取赛事新鲜事列表
