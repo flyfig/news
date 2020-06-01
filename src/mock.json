@@ -1,0 +1,106 @@
+{
+    "listThing": [
+        {
+            "thingResList": [
+                {
+                    "id": 2,
+                    "newThingId": 3,
+                    "type": 1,
+                    "resUrl": "http://img4.imgtn.bdimg.com/it/u=1548209578,2445392466&fm=26&gp=0.jpg"
+                }
+            ]
+        },
+        {
+            "thingResList": [
+                {
+                    "id": 2,
+                    "newThingId": 3,
+                    "type": 1,
+                    "resUrl": "http://img4.imgtn.bdimg.com/it/u=1963304009,2816364381&fm=26&gp=0.jpg"
+                }
+            ]
+        },
+        {
+          "thingResList": [
+              {
+                  "id": 2,
+                  "newThingId": 3,
+                  "type": 1,
+                  "resUrl": "http://img5.imgtn.bdimg.com/it/u=1327232003,2176862730&fm=26&gp=0.jpg"
+              }
+          ]
+        },
+        {
+          "thingResList": [
+              {
+                  "id": 2,
+                  "newThingId": 3,
+                  "type": 1,
+                  "resUrl": "http://img4.imgtn.bdimg.com/it/u=1963304009,2816364381&fm=26&gp=0.jpg"
+              }
+          ]
+        },
+        {
+          "thingResList": [
+              {
+                  "id": 2,
+                  "newThingId": 3,
+                  "type": 1,
+                  "resUrl": "http://img4.imgtn.bdimg.com/it/u=1548209578,2445392466&fm=26&gp=0.jpg"
+              }
+          ]
+        },
+        {
+            "thingResList": [
+                {
+                    "id": 2,
+                    "newThingId": 3,
+                    "type": 2,
+                    "resUrl": "https://www.tencent.com/video/index-video.mp4"
+                }
+            ]
+        },
+        {
+          "thingResList": [
+              {
+                  "id": 2,
+                  "newThingId": 3,
+                  "type": 2,
+                  "resUrl": "https://www.w3school.com.cn/i/movie.ogg"
+              }
+          ]
+        },
+        {
+          "thingResList": [
+              {
+                  "id": 2,
+                  "newThingId": 3,
+                  "type": 2,
+                  "resUrl": "https://www.tencent.com/video/index-video.mp4"
+              }
+          ]
+        },
+        {
+          "thingResList": [
+              {
+                  "id": 2,
+                  "newThingId": 3,
+                  "type": 2,
+                  "resUrl": "https://www.w3school.com.cn/i/movie.ogg"
+              }
+          ]
+        },
+        {
+          "thingResList": [
+              {
+                  "id": 2,
+                  "newThingId": 3,
+                  "type": 2,
+                  "resUrl": "https://www.tencent.com/video/index-video.mp4"
+              }
+          ]
+        }
+    ],
+    "code": 1,
+    "strMsg": "查询成功！"
+}
