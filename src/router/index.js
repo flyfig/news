@@ -54,6 +54,14 @@ const routes = [
         }
       },
       {
+        path: '/release_video',
+        name: 'release_video',
+        component: () => import(/* webpackChunkName: "about" */ '../views/pages/release_video.vue'),
+        meta: {
+          keepAlive: true
+        }
+      },
+      {
         path: '/search1',
         name: 'search1',
         component: () => import(/* webpackChunkName: "about" */ '../views/pages/search1.vue'),

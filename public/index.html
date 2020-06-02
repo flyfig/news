@@ -18,6 +18,15 @@
     <meta name="referrer" content="always">
     <script src="./static/js/jweixin-1.6.0.js"></script>
     <title>动态</title>
+    <script>
+        window.onerror = function (errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
+        alert("错误信息：" + errorMessage + ';出错行号：' + lineNumber + ';错误详情：' + errorObj);
+        console.log("出错文件：", scriptURI);
+        console.log("出错行号：", lineNumber);
+        console.log("出错列号：", columnNumber);
+        console.log("错误详情：", errorObj);
+    }
+    </script>
   </head>
   <body>
     <noscript>

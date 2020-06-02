@@ -16,7 +16,7 @@
         @load="onLoad"
       >
         <div class="home_menu">
-          <div class="menu_item" @click="link('/release')">
+          <div class="menu_item" @click="openReleaseList()">
            <!-- <input id="inputId" style="display: none;"  type="file"  multiple="multiple" accept="image/*;capture=camera"
             @change="handleFileChange($event)"> -->
             <div class="menu_item_icon">
@@ -34,6 +34,9 @@
             <p>搜索</p>
           </div>
         </div>
+
+    <van-action-sheet v-model="showReleaseList" cancel-text="取消" :actions="releaseList" @select="selectRelease" @cancel="onCancelRelease" />
+
         <div v-for="(item,i) in list" :key="i" class="dynamic">
           <div class="dynamic_head u-flex-between ">
             <div class="dynamic_user u-flex-between ">
@@ -177,7 +180,10 @@ export default ({
       nowId: '',
       nowContentId: '',
       nowCommentId: '',
-      showDel: false
+      showDel: false,
+      //发布的菜单选项
+      showReleaseList:false,
+       releaseList:[{ name: '发布图片',value: '/release' }, { name: '发布视频' ,value: '/release_video'}],
     }
   },
   methods: {
@@ -306,7 +312,7 @@ export default ({
               }
             })
           } else {
-            this.$toast('网络错误，请稍后再试！')
+            this.$toast(res.data.strMsg)
           }
         })
       } else {
@@ -320,10 +326,24 @@ export default ({
               }
             })
           } else {
-            this.$toast('网络错误，请稍后再试！')
+            this.$toast(res.data.strMsg)
           }
         })
       }
+    },
+    openReleaseList(){
+     this.showReleaseList = !this.showReleaseList;
+    },
+    selectRelease(item){
+      console.log(item);
+      if(item.value){
+        this.link(item.value);
+      }
+      //'/release'
+      this.showReleaseList = !this.showReleaseList;
+    },
+    onCancelRelease(){
+      Toast('取消');
     }
   }
 })
