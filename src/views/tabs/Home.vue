@@ -16,9 +16,9 @@
         @load="onLoad"
       >
         <div class="home_menu">
-          <div class="menu_item" @click="openRelease">
-           <input id="inputId" style="display: none;"  type="file"  multiple="multiple" accept="image/*;capture=camera"
-            @change="handleFileChange($event)">
+          <div class="menu_item" @click="link('/release')">
+           <!-- <input id="inputId" style="display: none;"  type="file"  multiple="multiple" accept="image/*;capture=camera"
+            @change="handleFileChange($event)"> -->
             <div class="menu_item_icon">
               <span class="iconfont iconxiangji" />
               <div class="menu_label">
@@ -324,15 +324,6 @@ export default ({
           }
         })
       }
-    },
-
-    openRelease  () {
-      document.getElementById('inputId').click();
-    },
-    handleFileChange (e) {
-      var files = e.target.files;
-      
-      
     }
   }
 })

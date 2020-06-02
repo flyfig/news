@@ -97,3 +97,13 @@ export function apiDelComment (id) {
     method: 'post'
   })
 }
+
+/**
+ * 微信功能初始化
+ */
+export function apiWxJSAPI () {
+  return request({
+    url: url + '/myInterFace/wxConfig.ashx?flag=share',   
+    method: 'get'
+  })
+}
