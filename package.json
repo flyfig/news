@@ -11,6 +11,7 @@
     "axios": "^0.18.0",
     "core-js": "^3.3.2",
     "eslint-plugin-html": "^5.0.0",
+    "jquery-weui": "^1.2.1",
     "js-cookie": "^2.2.1",
     "lrz": "^4.9.40",
     "vant": "^2.3.0",

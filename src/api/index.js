@@ -9,7 +9,7 @@
 import request from '@/utils/request'
 import qs from 'qs'
 // const url = '/api'
-const url = 'http://supwk.nat300.top'
+const url = ''
 
 /**
  * 获取赛事新鲜事列表
@@ -95,5 +95,15 @@ export function apiDelComment (id) {
       id: id
     },
     method: 'post'
+  })
+}
+
+/**
+ * 微信功能初始化
+ */
+export function apiWxJSAPI () {
+  return request({
+    url: url + '/myInterFace/wxConfig.ashx?flag=share',   
+    method: 'get'
   })
 }

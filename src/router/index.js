@@ -46,6 +46,14 @@ const routes = [
         }
       },
       {
+        path: '/release',
+        name: 'release',
+        component: () => import(/* webpackChunkName: "about" */ '../views/pages/release.vue'),
+        meta: {
+          keepAlive: true
+        }
+      },
+      {
         path: '/search1',
         name: 'search1',
         component: () => import(/* webpackChunkName: "about" */ '../views/pages/search1.vue'),
