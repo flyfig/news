@@ -46,13 +46,11 @@ module.exports = {
     hotOnly: true,
     // proxy: null
     proxy: {
-      '/api': {
-        target: 'http://www.supwk.com',
+      '^/myInterFace': {
+        target: 'http://www.supwk.com', //代理配置
         ws: true,
         changeOrigin: true,
-        pathRewrite: {
-          '^/api': 'http://www.supwk.com'
-        }
+        secure:false
       }
     }
     // before: app => {}
