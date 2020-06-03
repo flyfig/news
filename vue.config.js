@@ -7,10 +7,14 @@
  * @FilePath: \vue\vue.config.js
  */
 const path = require('path')
+const moment = require('moment');
+process.env.VUE_APP_TIME = moment().format('YYYY.MM.DD hh:mm:ss');
+
 module.exports = {
   publicPath: '/', // vueConf.baseUrl, // 根域上下文目录
   // outputDir: 'dist', // 构建输出目录
   assetsDir: 'wapAssets', // 静态资源目录 (js, css, img, fonts)
+  indexPath:'./www/index2.aspx',
   lintOnSave: true, // 是否开启eslint保存检测，有效值：ture | false | 'error'
   // runtimeCompiler: true, // 运行时版本是否需要编译
   transpileDependencies: [], // 默认babel-loader忽略mode_modules，这里可增加例外的依赖包名
@@ -54,5 +58,14 @@ module.exports = {
       }
     }
     // before: app => {}
-  }
+  },
+  chainWebpack: config => {
+    config.plugin('html')
+        .tap(args => {
+            if(process.env.NODE_ENV === 'production') {
+                args[0].minify.removeComments = false;
+            }
+            return args;
+        });
+}
 }
