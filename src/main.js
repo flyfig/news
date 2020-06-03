@@ -16,8 +16,8 @@ import './assets/font/iconfont.css'
 import 'vant/lib/index.css'
 import './utils/event.js'
 import waterfall from 'vue-waterfall2'
-import { Swipe, SwipeItem, List, PullRefresh, RadioGroup, Radio, Loading, Image, Lazyload, Tab, Tabs, Popup, Field, Dialog, Toast, ImagePreview, Uploader, DropdownMenu, DropdownItem, ActionSheet } from 'vant'
-Vue.use(Swipe).use(SwipeItem).use(List).use(PullRefresh).use(RadioGroup).use(Radio).use(Loading).use(Image).use(Lazyload).use(Tab).use(Tabs).use(Popup).use(Field).use(Dialog).use(Toast).use(ImagePreview).use(Uploader).use(DropdownMenu).use(DropdownItem).use(ActionSheet)
+import { Swipe, SwipeItem, List, PullRefresh, RadioGroup, Radio, Loading, Image, Lazyload, Tab, Tabs, Popup, Field, Dialog, Toast, ImagePreview, Uploader, DropdownMenu, DropdownItem, ActionSheet, Notify } from 'vant'
+Vue.use(Swipe).use(SwipeItem).use(List).use(PullRefresh).use(RadioGroup).use(Radio).use(Loading).use(Image).use(Lazyload).use(Tab).use(Tabs).use(Popup).use(Field).use(Dialog).use(Toast).use(ImagePreview).use(Uploader).use(Notify).use(DropdownMenu).use(DropdownItem).use(ActionSheet)
 
 Vue.config.productionTip = false
 Vue.use(waterfall)

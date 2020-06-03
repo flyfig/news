@@ -19,7 +19,7 @@
         @click.stop="setPreView(index)"
       >
         <span class="delete-image" @click.stop="deleteImage(index)">
-          <i class="el-icon-delete"></i>
+          <i class="iconfont el-icon-delete"></i>
         </span>
         <!-- <img :src="item" /> -->
       </div>
@@ -58,7 +58,7 @@
 <script lang="js">
 import Imglabel from '@/assets/img/Img.png'
 import Videolabel from '@/assets/img/video.png'
-import { ImagePreview } from 'vant'
+import { Toast } from 'vant'
 import { apiWxJSAPI } from '@/api'
 import { publishNewThing } from '@/api'
 import axios from 'axios'
@@ -248,6 +248,7 @@ export default ({
             },
             //将base64转换为文件对象
     dataURLtoFile:function (urlData, filename) {
+      debugger;
         var arr = urlData.split(',');
         var mime = arr[0].match(/:(.*?);/)[1];
         var bstr = atob(arr[1]);
@@ -255,6 +256,9 @@ export default ({
         var u8arr = new Uint8Array(n);
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n);
+        }
+        if((filename + '').indexOf('.')== -1){
+          filename += '.' + mime.split('/')[1];
         }
         //转换成file对象   转换成成blob对象  return new Blob([u8arr],{type:mime});
         return new File([u8arr], filename, {
@@ -301,7 +305,6 @@ export default ({
               // 	quality += 0.001;
               // 	base64 = canvas.toDataURL("image/jpeg", quality);
               // }
-              console.log(base64);
               callback(base64);//必须通过回调函数返回，否则无法及时拿到该值
           }
       },
@@ -332,7 +335,7 @@ export default ({
     //发布图文消息
     sendImage:function(){
       if(!this.newThing || this.newThing == ''){
-          Toast('您有什么需要发表的呢？');
+          Toast('您不打算添加点文字吗？');
           return;
       }
       var files = this.imgListToFile();
@@ -342,7 +345,9 @@ export default ({
       form.append('newThing',this.newThing);
       if(files){
         form.append('type',1);
-        form.append('files',files);
+        for(var i=0;i<files.length;i++){
+          form.append('files',files[i]);
+        }
       }
 
       var  config = {
@@ -354,9 +359,12 @@ export default ({
       };
  
       axios.post("/myInterFace/NewThing.ashx?flag=publishNewThing", form, config).then(res => {
-          console.log(res);
+                Toast.success(res.data.strMsg);
+                setTimeout(() => {
+                  this.$router.push('/home')
+                }, 2500);
       }).catch(error => {
-          console.log(error);
+          Toast.fail(res.data.strMsg)
       });
     },
     imgListToFile:function(){
