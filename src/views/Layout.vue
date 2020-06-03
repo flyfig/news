@@ -20,7 +20,7 @@
       </transition>
       <!--这里是不会被缓存的组件-->
     </div>
-    <div class="nav">
+    <div class="nav" style="display:none">
       <router-link class="link" to="/home">
         <span class="iconfont iconshouye" />
         <p>首页</p>

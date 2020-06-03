@@ -13,7 +13,7 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="onLoad"
+       
       >
         <div class="home_menu">
           <div class="menu_item" @click="openReleaseList()">
@@ -169,7 +169,7 @@ export default ({
       finished: false,
       params: {
         flag: 'thinglist',
-        gameId: 28,
+        gameId: GetQueryString("gameId") ||GetQueryString("gameID") || 28,
         nowSize: 0
       },
       show: false,
@@ -185,6 +185,9 @@ export default ({
       showReleaseList:false,
        releaseList:[{ name: '发布图片',value: '/release' }, { name: '发布视频' ,value: '/release_video'}],
     }
+  },
+  mounted() {
+    this.onLoad();
   },
   methods: {
     link (url) {
