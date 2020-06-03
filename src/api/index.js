@@ -8,6 +8,7 @@
  */
 import request from '@/utils/request'
 import qs from 'qs'
+import { Form } from 'element-ui'
 // const url = '/api'
 const url = ''
 
@@ -106,4 +107,22 @@ export function apiWxJSAPI () {
     url: url + '/myInterFace/wxConfig.ashx?flag=share',   
     method: 'get'
   })
+}
+
+/**发布新鲜事  http://www.supwk.com/myInterFace/NewThing.ashx?flag=publishNewThing
+ * @param form form表单
+*/
+export function publishNewThing(form){
+  return request({
+    url:url + '/myInterFace/NewThing.ashx?flag=publishNewThing',
+    params:form,
+    config :{
+      //formData  提交请求头有两种 multipart/form-data  和 application/x-www-form-urlencoded
+      // multipart/form-data   用于type=file 的input提交
+      headers: {
+             "Content-Type": "multipart/form-data"
+      }
+   },
+    method:'post'
+  });
 }

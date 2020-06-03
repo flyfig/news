@@ -20,18 +20,13 @@
       </div>
 
       <div class="img-add" @click.stop="chooseImage($event)" v-show="imgList.length < 1">
-        <input v-if="isiOS==true"
+        <input 
           @change="selectImage($event)"
           style="display: none;"
           type="file"
           accept="video/*"
         />
-        <input v-else
-          @change="selectImage($event)"
-          style="display: none;"
-          type="file"
-          accept="video/*" capture="camcorder"
-        />
+       
       </div>
 
       

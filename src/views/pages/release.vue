@@ -3,16 +3,21 @@
     <div class="head">
       <span class="iconfont iconfanhui" @click="$router.back()" />
 
-      <button class="release-send weui-btn_primary">发表</button>
+      <button class="release-send weui-btn_primary" @click="sendImage">发表</button>
     </div>
     <div class="textarea-li">
-      <textarea class="textarea" placeholder="这一刻的想法"></textarea>
+      <textarea class="textarea" placeholder="这一刻的想法" v-model="newThing"></textarea>
     </div>
 
     <div class="img-list">
       <label></label>
-      <div class="img-item" v-for="(item,index) in imgList" :key="index"
-      :style="'background-image:url('+item + ')'" @click.stop="setPreView(index)">
+      <div
+        class="img-item"
+        v-for="(item,index) in imgList"
+        :key="index"
+        :style="'background-image:url('+item + ')'"
+        @click.stop="setPreView(index)"
+      >
         <span class="delete-image" @click.stop="deleteImage(index)">
           <i class="el-icon-delete"></i>
         </span>
@@ -21,8 +26,10 @@
 
       <div class="img-add" @click.stop="chooseImage($event,)" v-show="imgList.length < 4">
         <input
+          ref="inputImage"
           multiple="multiple"
           @change="selectImage($event)"
+          @click="$event.target.files=null"
           style="display: none;"
           type="file"
           accept="image/*;capture=camera"
@@ -32,14 +39,18 @@
     </div>
 
     <!-- 预览页面             -->
-    <div class="preview" v-show="imgList.length" >
+    <div class="preview" v-show="imgList.length">
       <div class="to-pre" :class="curPreViewIndex !=0 ? '':'no-next'" @click="toPre()">
-<span class="iconfont iconfanhui" />
+        <span class="iconfont iconfanhui" />
       </div>
-      <div class="to-next" :class="(curPreViewIndex ==imgList.length -1 || 1 >=imgList.length) ? 'no-next':''" @click="toNext()">
-<span class="iconfont iconfanhui" />
+      <div
+        class="to-next"
+        :class="(curPreViewIndex ==imgList.length -1 || 1 >=imgList.length) ? 'no-next':''"
+        @click="toNext()"
+      >
+        <span class="iconfont iconfanhui" />
       </div>
-      <img :src="curPreViewImage" v-show="curPreViewImage">
+      <img :src="curPreViewImage" v-show="curPreViewImage" />
     </div>
   </div>
 </template>
@@ -49,6 +60,8 @@ import Imglabel from '@/assets/img/Img.png'
 import Videolabel from '@/assets/img/video.png'
 import { ImagePreview } from 'vant'
 import { apiWxJSAPI } from '@/api'
+import { publishNewThing } from '@/api'
+import axios from 'axios'
 // import mock from '@/mock.json'
 export default ({
   name: 'release',
@@ -57,6 +70,7 @@ export default ({
       curPreViewImage:null,
       curPreViewIndex:0,
       imgList:[],
+      gameId: GetQueryString("gameId") ||GetQueryString("gameID") || -1,
       videoFile:null,
        //微信分享参数
         appid: null,
@@ -64,6 +78,7 @@ export default ({
         nonceStr: null,
         signature: null,
         isWxChoose: false,
+        newThing:null,
     }
   },
   computed: {
@@ -195,7 +210,10 @@ export default ({
                 
 
             },
-
+            //清除input的内容
+            clearInputImage:function(){
+              this.$refs.inputImage.val('');
+            },
             //添加球队logo
             selectImage: function (e) {
                 var files = e.target.files;
@@ -214,7 +232,10 @@ export default ({
 
                     reader.onload = function (ee) {
                         if(that.imgList.length <4){
-                          that.imgList.push(ee.target.result);
+                          
+                          that.dealImage(ee.target.result,1080,function(data){
+                            that.imgList.push(data);
+                          })
                         }
                         
                     }
@@ -243,7 +264,7 @@ export default ({
      //压缩方法 base64图片数据， w：图片宽度，callback回调函数
       dealImage: function (base64, w, callback) {
           var newImage = new Image();
-          var quality = 1;    //压缩系数0-1之间
+          var quality =  0.6   //压缩系数0-1之间
           newImage.src = base64;
           newImage.setAttribute("crossOrigin", 'Anonymous');	//url为外域时需要
           var imgWidth, imgHeight;
@@ -280,6 +301,7 @@ export default ({
               // 	quality += 0.001;
               // 	base64 = canvas.toDataURL("image/jpeg", quality);
               // }
+              console.log(base64);
               callback(base64);//必须通过回调函数返回，否则无法及时拿到该值
           }
       },
@@ -305,13 +327,55 @@ export default ({
     setPreView:function(index){
       this.curPreViewIndex = index;
       this.curPreViewImage = this.imgList[index];
+    },
+
+    //发布图文消息
+    sendImage:function(){
+      if(!this.newThing || this.newThing == ''){
+          Toast('您有什么需要发表的呢？');
+          return;
+      }
+      var files = this.imgListToFile();
+
+        var form = new FormData();
+      form.append('gameId',this.gameId);
+      form.append('newThing',this.newThing);
+      if(files){
+        form.append('type',1);
+        form.append('files',files);
+      }
+
+      var  config = {
+        //formData  提交请求头有两种 multipart/form-data  和 application/x-www-form-urlencoded
+        // multipart/form-data   用于type=file 的input提交
+        headers: {
+                "Content-Type": "multipart/form-data"
+        }
+      };
+ 
+      axios.post("/myInterFace/NewThing.ashx?flag=publishNewThing", form, config).then(res => {
+          console.log(res);
+      }).catch(error => {
+          console.log(error);
+      });
+    },
+    imgListToFile:function(){
+        var files = null;
+        if(this.imgList.length){
+          files = [];
+          for(var i=0;i<this.imgList.length;i++){
+            var file = this.dataURLtoFile(this.imgList[i], i);
+            files.push(file);
+          }
+        }
+        return files;
     }
   }
 })
 </script>
 
 <style  scoped>
-.release{
+.release {
   width: 100%;
   height: 100%;
 }
@@ -345,7 +409,7 @@ export default ({
   min-height: 80px;
   width: 100%;
   display: inline-flex;
-      padding: 0 0 0 10px
+  padding: 0 0 0 10px;
 }
 .img-item,
 .img-add,
@@ -389,31 +453,32 @@ export default ({
 }
 .img-item {
   color: #fff;
-      background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .delete-image {
- color: #fff;
-    width: 20px;
-    height: 22px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 20px;
-    background-color: rgba(100,100,100,0.7);
+  color: #fff;
+  width: 20px;
+  height: 22px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 20px;
+  background-color: rgba(100, 100, 100, 0.7);
 }
 
-.preview{
-      width: 100%;
-    height: calc(100% - 220px);
-    margin-top: 10px;
-    position: relative;
-    margin-bottom: 1.3rem;
-    box-shadow: 0 0px 5px #888888;
-    overflow-x: hidden;
+.preview {
+  width: 100%;
+  height: calc(100% - 220px);
+  margin-top: 10px;
+  position: relative;
+  margin-bottom: 1.3rem;
+  box-shadow: 0 0px 5px #888888;
+  overflow-x: hidden;
 }
-.preview .to-pre,.preview .to-next{
+.preview .to-pre,
+.preview .to-next {
   position: absolute;
   width: 40px;
   height: 40px;
@@ -422,26 +487,29 @@ export default ({
   top: 100px;
   left: 10px;
 }
-.preview .to-next{
-    right: 10px;
-    left: auto;
+.preview .to-next {
+  right: 10px;
+  left: auto;
 }
-.preview .to-next .iconfont,.preview .to-pre .iconfont{
+.preview .to-next .iconfont,
+.preview .to-pre .iconfont {
   color: #fff;
   font-size: 23px;
 }
-.preview .to-next .iconfont{
+.preview .to-next .iconfont {
   transform: rotate(180deg);
   margin-left: 10px;
 }
-.preview .no-next{
-    background-color: rgba(200, 200, 200, 0.5);
+.preview .no-next {
+  background-color: rgba(200, 200, 200, 0.5);
 }
-.preview .no-next .iconfont{
+.preview .no-next .iconfont {
   color: #bababa;
 }
-.preview img{
-  width: 100%;
-  height: 100%;
+.preview img {
+      max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
 }
 </style>
