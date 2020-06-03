@@ -20,14 +20,14 @@
       </transition>
       <!--这里是不会被缓存的组件-->
     </div>
-    <div class="nav" style="display:none">
+    <div class="nav">
       <router-link class="link" to="/home">
         <span class="iconfont iconshouye" />
         <p>首页</p>
       </router-link>
       <router-link class="link" to="/merchant">
         <span class="iconfont iconaixin" />
-        <p>新鲜事</p>
+        <p>赛事列表</p>
       </router-link>
       <router-link class=" link" to="/merchant">
         <img class="nav_center_img" src="@/assets/img/Add.png" alt="">
