@@ -6,7 +6,7 @@
       <button class="release-send weui-btn_primary">发表</button>
     </div>
     <div class="textarea-li">
-      <textarea class="textarea" placeholder="这一刻的想法"></textarea>
+      <textarea class="textarea" placeholder="这一刻的想法" v-model="newThing"></textarea>
     </div>
 
     <div class="img-list">
@@ -20,11 +20,17 @@
       </div>
 
       <div class="img-add" @click.stop="chooseImage($event)" v-show="imgList.length < 1">
-        <input 
+         <input v-if="isiOS==true" ref="myVideo"
           @change="selectImage($event)"
           style="display: none;"
           type="file"
           accept="video/*"
+        />
+        <input v-else ref="myVideo"
+          @change="selectImage($event)"
+          style="display: none;"
+          type="file"
+          accept="video/*" capture="camcorder"
         />
        
       </div>
@@ -225,7 +231,7 @@ export default ({
                 }
             },
             //将base64转换为文件对象
-    dataURLtoFile:function (urlData, filename) {
+  dataURLtoFile:function (urlData, filename) {
         var arr = urlData.split(',');
         var mime = arr[0].match(/:(.*?);/)[1];
         var bstr = atob(arr[1]);
@@ -233,6 +239,9 @@ export default ({
         var u8arr = new Uint8Array(n);
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n);
+        }
+        if((filename + '').indexOf('.')== -1){
+          filename += '.' + mime.split('/')[1];
         }
         //转换成file对象   转换成成blob对象  return new Blob([u8arr],{type:mime});
         return new File([u8arr], filename, {
@@ -242,7 +251,42 @@ export default ({
     deleteImage:function(index){
         this.imgList.splice(index,1);
         this.videoUrl = null;
-    }
+    },
+     //发布图文消息
+    sendImage:function(){
+      if(!this.newThing || this.newThing == ''){
+          Toast('您不打算添加点文字吗？');
+          return;
+      }
+      var files = this.imgListToFile();
+
+        var form = new FormData();
+      form.append('gameId',this.gameId);
+      form.append('newThing',this.newThing);
+      if(files){
+        form.append('type',2);
+        for(var i=0;i<files.length;i++){
+          form.append('files',files[i]);
+        }
+      }
+
+      var  config = {
+        //formData  提交请求头有两种 multipart/form-data  和 application/x-www-form-urlencoded
+        // multipart/form-data   用于type=file 的input提交
+        headers: {
+                "Content-Type": "multipart/form-data"
+        }
+      };
+ 
+      axios.post("/myInterFace/NewThing.ashx?flag=publishNewThing", form, config).then(res => {
+                Toast.success(res.data.strMsg);
+                setTimeout(() => {
+                  this.$router.push('/home')
+                }, 2500);
+      }).catch(error => {
+          Toast.fail(res.data.strMsg)
+      });
+    },
    
   }
 })

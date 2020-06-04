@@ -78,8 +78,8 @@ export default ({
       Imglabel,
       Videolabel,
       params: {
-        flag: 'thinglist',
-        gameId: 28,
+        flag: (GetQueryString("gameId") ||GetQueryString("gameID")) ? 'thinglist' :'allThinglist',
+        gameId: GetQueryString("gameId") ||GetQueryString("gameID") || -1,
         nowSize: 0,
         search: ''
       },

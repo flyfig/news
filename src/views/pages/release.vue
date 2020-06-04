@@ -248,7 +248,6 @@ export default ({
             },
             //将base64转换为文件对象
     dataURLtoFile:function (urlData, filename) {
-      debugger;
         var arr = urlData.split(',');
         var mime = arr[0].match(/:(.*?);/)[1];
         var bstr = atob(arr[1]);
