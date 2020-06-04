@@ -3,7 +3,7 @@
     <div class="head">
       <span class="iconfont iconfanhui" @click="$router.back()" />
 
-      <button class="release-send weui-btn_primary">发表</button>
+      <button class="release-send weui-btn_primary" @click="sendImage">发表</button>
     </div>
     <div class="textarea-li">
       <textarea class="textarea" placeholder="这一刻的想法" v-model="newThing"></textarea>
@@ -51,13 +51,16 @@
 <script lang="js">
 import Imglabel from '@/assets/img/Img.png'
 import Videolabel from '@/assets/img/video.png'
+import { Toast } from 'vant'
 import { ImagePreview } from 'vant'
 import { apiWxJSAPI } from '@/api'
+import axios from 'axios'
 // import mock from '@/mock.json'
 export default ({
   name: 'release',
   data () {
     return {
+       gameId: GetQueryString("gameId") ||GetQueryString("gameID") || -1,
       videoUrl:null,
       curPreViewIndex:0,
       imgList:[],
@@ -287,7 +290,17 @@ export default ({
           Toast.fail(res.data.strMsg)
       });
     },
-   
+    imgListToFile:function(){
+        var files = null;
+        if(this.imgList.length){
+          files = [];
+          for(var i=0;i<this.imgList.length;i++){
+            var file = this.dataURLtoFile(this.imgList[i], i);
+            files.push(file);
+          }
+        }
+        return files;
+    }
   }
 })
 </script>
