@@ -71,10 +71,11 @@ export function apilike (id) {
     method: 'post'
   })
 }
+
 /**
  * 取消点赞
  */
-export function apiUnlike (id) {
+export function deletelike (id) {
   return request({
     url: url + '/myInterFace/NewThing.ashx',
     params: {

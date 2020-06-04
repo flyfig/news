@@ -45,13 +45,13 @@ module.exports = {
   devServer: {
     open: true,
     host: '0.0.0.0',
-    port: 8082,
+    port: 8081,
     https: false,
     hotOnly: true,
     // proxy: null
     proxy: {
       '^/myInterFace': {
-        target: 'http://localhost:80', //代理配置
+        target: 'http://supwk.nat300.top', //代理配置
         ws: true,
         changeOrigin: true,
         secure:false

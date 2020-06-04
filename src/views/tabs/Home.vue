@@ -157,7 +157,7 @@
 </template>
 
 <script lang="js">
-import { getnews, apicomment, apilike, apiUnlike, deleteThing, apiDelComment } from '@/api'
+import { getnews, apicomment, apilike, deletelike, apiUnlike, deleteThing, apiDelComment } from '@/api'
 import { formatDateTime, getDuration } from '@/utils/tools'
 export default ({
   name: 'Home',
@@ -207,7 +207,16 @@ export default ({
           var arr = res.data.listThing
           arr.forEach((item, i) => {
             arr[i].isLike = false
-            arr[i].shownum = 3
+            arr[i].shownum = 3;
+            var LikeList = arr[i]['LikeList'];
+            if(LikeList && LikeList.length){
+              for(var n=0;n<LikeList.length;n++){
+                if(LikeList[n]['likeId'] == res.data.userId){
+                    arr[i].isLike=true;
+                    break;
+                }
+              }
+            }
           })
           this.list = this.list.concat(arr)
           if (res.data.listThing.length < 10) {
@@ -306,7 +315,7 @@ export default ({
     },
     like (id, islike) {
       if (islike) {
-        apiUnlike(id).then(res => {
+        deletelike(id).then(res => {
           if (res.data.code === 1) {
             this.list.forEach((item, i) => {
               if (id === item.id) {
