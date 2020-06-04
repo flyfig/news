@@ -51,7 +51,7 @@ module.exports = {
     // proxy: null
     proxy: {
       '^/myInterFace': {
-        target: 'http://www.supwk.nat300.top', //代理配置
+        target: 'http://localhost:80', //代理配置
         ws: true,
         changeOrigin: true,
         secure:false

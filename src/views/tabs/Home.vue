@@ -168,7 +168,7 @@ export default ({
       loading: false,
       finished: false,
       params: {
-        flag: 'thinglist',
+        flag: (GetQueryString("gameId") ||GetQueryString("gameID")) ? 'thinglist' :'allThinglist',
         gameId: GetQueryString("gameId") ||GetQueryString("gameID") || -1,
         nowSize: 0
       },
