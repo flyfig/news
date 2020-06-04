@@ -169,7 +169,7 @@ export default ({
       finished: false,
       params: {
         flag: 'thinglist',
-        gameId: GetQueryString("gameId") ||GetQueryString("gameID") || 28,
+        gameId: GetQueryString("gameId") ||GetQueryString("gameID") || -1,
         nowSize: 0
       },
       show: false,
