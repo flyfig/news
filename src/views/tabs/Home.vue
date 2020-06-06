@@ -56,7 +56,9 @@
           </div>
           <van-swipe v-if="item.thingResList.length>0" class="home_swipe" :style="item.thingResList.length>1?'padding-bottom: 0.6rem;':'padding-bottom: 0;'" indicator-color="#1a9b3f">
             <van-swipe-item v-for="(obj,index) in item.thingResList" :key="index">
-              <img v-lazy="$site+obj.resUrl">
+              
+              <img v-lazy="$site+obj.resUrl" v-if="obj.type == 1">
+              <video class="media" style="max-width:100%;max-height:100%;" controls="controls" :src="$site+obj.resUrl" v-else>
             </van-swipe-item>
           </van-swipe>
           <div class="dynamic_content">
@@ -563,7 +565,7 @@ export default ({
 .home_swipe{
   padding-bottom: 60/@rem;
   width: 100%;
-  height: 820/@rem;
+  // height: 820/@rem;
   img{
     width: 100%;
     height: 100%;

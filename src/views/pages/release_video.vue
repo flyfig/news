@@ -43,7 +43,7 @@
     <!-- 预览页面             -->
     <div class="preview" v-show="imgList.length" >
      
-      <video class="media" :src="videoUrl" v-show="videoUrl" controls="controls" autoplay="autoplay"></video>
+      <video class="media"  :src="videoUrl" v-show="videoUrl" controls="controls" autoplay="autoplay"></video>
     </div>
   </div>
 </template>

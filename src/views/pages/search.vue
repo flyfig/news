@@ -39,7 +39,7 @@
           </div>
           <div class="img_warp1">
             <div v-for="(item,i) in videoList" v-show="videoList.length>0" :key="i" class="img_list" :class="{'bigImg':item.type===2}">
-              <video ref="video" loop muted class="video" width="100%" height="100%" :src="$site+item.resUrl" @click="handleVideo" />
+              <video ref="video" loop muted class="video" controls="controls" width="100%" height="100%" :src="$site+item.resUrl" @click="handleVideo" />
               <img class="img_label" :src="item.type===2?Videolabel:Imglabel">
             </div>
           </div>
@@ -197,14 +197,14 @@ export default ({
       ImagePreview([src])
     },
     handleVideo (e) {
-      const src = e.target.src
-      e.target.pause()
-      this.element = e.target
-      this.show = true
-      this.bigVideo = src
-      this.$nextTick(() => {
-        this.$refs.bigvideo.play()
-      })
+      // const src = e.target.src
+      // e.target.play()
+      // this.element = e.target
+      // this.show = true
+      // this.bigVideo = src
+      // this.$nextTick(() => {
+      //   this.$refs.bigvideo.play()
+      // })
     },
     popupClose () {
       this.element.play()
