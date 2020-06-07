@@ -46,8 +46,32 @@
 </template>
 
 <script lang="js">
+import { getWxUser } from '@/api'
 export default ({
-
+     data () {
+      return {
+        userInfo:{}
+      }
+     },
+      mounted() {
+        this.onLoad();
+      },
+      methods:{
+         onLoad () {
+      var params = {
+      reditUrl:window.location.href
+      }
+      getWxUser(params).then(res => {
+        if(res.data.id){
+          this.userInfo = res.data;
+        }
+      }).catch(err => {
+        // setTimeout(() => {
+        //   this.onLoad();
+        // }, 2000);
+      })
+    },
+      }
 })
 </script>
 

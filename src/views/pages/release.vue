@@ -61,7 +61,6 @@ import Videolabel from '@/assets/img/video.png'
 import { Toast } from 'vant'
 import { apiWxJSAPI } from '@/api'
 import { publishNewThing } from '@/api'
-import axios from 'axios'
 // import mock from '@/mock.json'
 export default ({
   name: 'release',
@@ -99,6 +98,7 @@ export default ({
   },
   mounted () {
     this.wxInit();
+    console.log(this.$parent.userInfo);
   },
   destroyed () {
     
@@ -357,14 +357,14 @@ export default ({
         }
       };
  
-      axios.post("/myInterFace/NewThing.ashx?flag=publishNewThing", form, config).then(res => {
-                Toast.success(res.data.strMsg);
+
+    publishNewThing(form).then(res => {
+          console.log(res)
+           Toast.success(res.data.strMsg);
                 setTimeout(() => {
                   this.$router.push('/home')
                 }, 2500);
-      }).catch(error => {
-          Toast.fail(res.data.strMsg)
-      });
+        })
     },
     imgListToFile:function(){
         var files = null;

@@ -9,9 +9,18 @@
 import request from '@/utils/request'
 import qs from 'qs'
 import { Form } from 'element-ui'
+import { _ } from 'core-js'
 // const url = '/api'
 const url = ''
 
+/**获取微信用户信息 */
+export function getWxUser(params){
+  return request({
+    url: url + '/myInterFace/GetWXUser.ashx',
+    params,
+    method: 'get'
+  })
+}
 /**
  * 获取赛事新鲜事列表
  */
@@ -117,13 +126,9 @@ export function publishNewThing(form){
   return request({
     url:url + '/myInterFace/NewThing.ashx?flag=publishNewThing',
     params:form,
-    config :{
-      //formData  提交请求头有两种 multipart/form-data  和 application/x-www-form-urlencoded
-      // multipart/form-data   用于type=file 的input提交
-      headers: {
-             "Content-Type": "multipart/form-data"
-      }
-   },
+    headers:{
+      'Content-type': 'application/x-www-form-urlencoded'
+     },
     method:'post'
   });
 }
