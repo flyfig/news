@@ -58,7 +58,7 @@
             <van-swipe-item v-for="(obj,index) in item.thingResList" :key="index">
               
               <img v-lazy="$site+obj.resUrl" v-if="obj.type == 1">
-              <video class="media" style="max-width:100%;max-height:100%;" controls="controls" :src="$site+obj.resUrl" v-else>
+              <video class="media" style="max-width:100%;max-height:100%;" controls="controls" :src="$site+obj.resUrl" v-else></video>
             </van-swipe-item>
           </van-swipe>
           <div class="dynamic_content">
@@ -190,6 +190,7 @@ export default ({
   },
   mounted() {
     this.onLoad();
+    var b = '\<%=strPower %\>';
   },
   methods: {
     link (url) {

@@ -18,6 +18,7 @@
       <router-view v-if="!$route.meta.keepAlive" />
     </transition>
     <!--这里是不会被缓存的组件-->
+    <div id="c"><%=strPower %></div>
   </div>
 </template>
 
